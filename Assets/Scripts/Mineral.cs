@@ -1,18 +1,15 @@
+using System;
 using UnityEngine;
 
 public class Mineral : MonoBehaviour
 {
-    private bool _isOccupied;
+    public event Action<Mineral> Collected;
 
-    public bool IsOccupied => _isOccupied;
+    public Transform SpawnPoint {  get; private set; }
 
-    private void Start()
-    {
-        _isOccupied = false;
-    }
+    private void OnDisable() => SpawnPoint = null;
 
-    public void Occupy()
-    {
-        _isOccupied = true;
-    }
+    public void SetSpawnPoint(Transform spawnPoint) => SpawnPoint = spawnPoint;
+
+    public void SendMessageAboutCollectionComplete() => Collected?.Invoke(this);
 }
