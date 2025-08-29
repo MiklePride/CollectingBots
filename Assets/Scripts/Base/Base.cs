@@ -7,6 +7,7 @@ public class Base : MonoBehaviour
     [SerializeField] private List<Bot> _bots = new();
     [SerializeField] private Transform _storage;
     [SerializeField] private Transform _idlePoint;
+    [SerializeField] private DataBase _dataBase;
 
     private BaseScanner _scanner;
 
@@ -17,24 +18,32 @@ public class Base : MonoBehaviour
 
     private void Start()
     {
+        if (!_dataBase.HasFreeResource)
+            _dataBase.AddNewResources(_scanner.ScanForMinerals());
+
         foreach (Bot bot in _bots)
         {
-            if (_scanner.TryGetNearestMineral(out Mineral mineral))
+            if (_dataBase.HasFreeResource)
             {
-                AssignBotToCollection(bot, mineral);
+                AssignBotToCollection(bot, _dataBase.GetResource());
             }
         }
     }
 
     private void Update()
     {
-        foreach(Bot bot in _bots)
+        if (!_dataBase.HasFreeResource)
+        {
+            _dataBase.AddNewResources(_scanner.ScanForMinerals());
+        }
+
+        foreach (Bot bot in _bots)
         {
             if (bot.IsIdle)
             {
-                if (_scanner.TryGetNearestMineral(out Mineral mineral))
+                if (_dataBase.HasFreeResource)
                 {
-                    AssignBotToCollection(bot, mineral);
+                    AssignBotToCollection(bot, _dataBase.GetResource());
                 }
             }
         } 

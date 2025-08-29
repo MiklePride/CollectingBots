@@ -9,11 +9,11 @@ public class Storage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ( other.TryGetComponent<Mineral>(out Mineral mineral))
+        if ( other.TryGetComponent(out Mineral mineral))
         {
             _mineralCount++;
-            Destroy(mineral.gameObject);
             MineralCountChanged?.Invoke(_mineralCount);
+            mineral.SendMessageAboutCollectionComplete();
         }
     }
 }
