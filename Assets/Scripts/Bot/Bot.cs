@@ -9,7 +9,7 @@ public class Bot : MonoBehaviour
     {
         get
         {
-            return !_stateMachine.IsIdleState;
+            return _stateMachine.IsIdleState;
         }
     }
 

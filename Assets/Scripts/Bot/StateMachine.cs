@@ -14,7 +14,7 @@ public class StateMachine : MonoBehaviour
             if (_taskData == null)
                 return false;
 
-            return !_taskData.IsTaskCompleted;
+            return _taskData.IsTaskCompleted;
         }
     }
 

@@ -9,13 +9,6 @@ public class DataBase : MonoBehaviour
 
     public bool HasFreeResource => _freeResources.Count > 0;
 
-    private void OnReleaseResource(Mineral resource)
-    {
-        _occupiedResources.Remove(resource);
-
-        resource.Collected -= OnReleaseResource;
-    }
-
     public void AddNewResources(List<Mineral> newResources)
     {
         if (newResources == null || newResources.Count == 0)
@@ -71,5 +64,12 @@ public class DataBase : MonoBehaviour
         }
 
         return mineral;
+    }
+
+    private void OnReleaseResource(Mineral resource)
+    {
+        _occupiedResources.Remove(resource);
+
+        resource.Collected -= OnReleaseResource;
     }
 }
