@@ -28,7 +28,12 @@ public class RTSCamera : MonoBehaviour
         _targetFOV = _camera.fieldOfView;
     }
 
-    // Input System events
+    private void Update()
+    {
+        HandleMovement();
+        HandleZoom();
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
@@ -37,12 +42,6 @@ public class RTSCamera : MonoBehaviour
     public void OnZoom(InputAction.CallbackContext context)
     {
         _zoomInput = context.ReadValue<float>();
-    }
-
-    private void Update()
-    {
-        HandleMovement();
-        HandleZoom();
     }
 
     private void HandleMovement()
